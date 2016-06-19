@@ -40,7 +40,6 @@ func downloadUrl(url string, out imageStream) {
 			cvimg := opencv.FromImage(*img)
 			if cvimg != nil {
 				out <- *cvimg
-				log.Println("got image from url")
 			}
 		}
 	}
