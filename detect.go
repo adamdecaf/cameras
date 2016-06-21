@@ -46,10 +46,12 @@ func detectFaces(cascade opencv.HaarCascade, img opencv.IplImage) {
 	faces := cascade.DetectObjects(&img)
 	log.Printf("found %d faces", len(faces))
 	for _, value := range faces {
-		opencv.Rectangle(&img,
-			opencv.Point{value.X() + value.Width(), value.Y()},
-			opencv.Point{value.X(), value.Y() + value.Height()},
-			opencv.ScalarAll(255.0), 1, 1, 0)
+		if (value.X() != nil && value.Y() != nil) && (value.Height() != nil && value.Width() != nil) {
+			opencv.Rectangle(&img,
+				opencv.Point{value.X() + value.Width(), value.Y()},
+				opencv.Point{value.X(), value.Y() + value.Height()},
+				opencv.ScalarAll(255.0), 1, 1, 0)
+		}
 	}
 
 	if len(faces) > 0 {
