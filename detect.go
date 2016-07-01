@@ -27,7 +27,7 @@ func DetectFaces(in imageStream) {
 		cvimg, ok := <-in
 		if ok {
 			ci := cvimg
-			go detect(*cascade, ci)
+			detect(*cascade, ci)
 		}
 	}
 }
