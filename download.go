@@ -11,9 +11,16 @@ import (
 type imageStream chan opencv.IplImage
 
 func downloadFile(path string, out imageStream) {
-	image := opencv.LoadImage(path)
-	if image != nil {
-		out <- *image
+	cap := opencv.NewFileCapture(path)
+	if cap == nil {
+		log.Printf("error reading video file at %s\n", path)
+	}
+
+	for {
+		frame := cap.QueryFrame()
+		if frame != nil {
+			out <- *frame
+		}
 	}
 	return
 }
