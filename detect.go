@@ -48,15 +48,12 @@ func detectFaces(cascade opencv.HaarCascade, img opencv.IplImage) {
 	for _, value := range faces {
 		if value != nil {
 			if value.X() > 0 && value.Y() > 0 {
-				// This is a way to check if Height()/Width() would be malformed and segfault
-				// .height and .width seem to be null/nil? and throw segfaults
-				v2 := opencv.Rect{}
-				v2.Init(value.X(), value.Y(), 0, 0)
-				if *value != v2 {
-					p1 := opencv.Point{value.X() + value.Width(), value.Y()}
-					p2 := opencv.Point{value.X(), value.Y() + value.Height()}
-					opencv.Rectangle(&img, p1, p2, opencv.ScalarAll(255.0), 1, 1, 0)
-				}
+				p1 := opencv.Point{value.X() + value.Width(), value.Y()}
+				p2 := opencv.Point{value.X(), value.Y() + value.Height()}
+
+
+
+				opencv.Rectangle(&img, p1, p2, opencv.ScalarAll(255.0), 1, 1, 0)
 			}
 		}
 	}
